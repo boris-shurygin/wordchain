@@ -27,6 +27,7 @@ my $ok = 1;
 my $prev;
 my $used = {};
 while(<CHAIN>) {
+	my $str = $_;
 	if (/^(\S{4})$/) {
 		my $word = $1;
 		if ( !$dict->{$word}) {
@@ -48,10 +49,8 @@ while(<CHAIN>) {
 		}
 		$prev = $word;
 		$used->{$word} = 1;
-	} else {
-		$ok = 0;
-	}
-	$i++;
+		$i++;
+	} 
 }
 if ($ok) {
 	print "$i Success!!!\n";
