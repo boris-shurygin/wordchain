@@ -8,14 +8,16 @@ my $chain_fname  = $ARGV[1];
 open DICT, "<", $dict_fname or die "Cannot open $dict_fname";
 
 my $dict = {};
-
+my $num_words = 0;
 while(<DICT>){
-	if (/^(\S{4})$/)
+	if (/^(\w{4})/)
 	{
 		my $word = $1;
 		$dict->{$word} = 1;
+		$num_words++;
 	}
 }
+print "Loaded dictionary with $num_words words\n";
 
 close DICT;
 
@@ -28,10 +30,10 @@ my $prev;
 my $used = {};
 while(<CHAIN>) {
 	my $str = $_;
-	if (/^(\S{4})$/) {
-		my $word = $1;
+	if (/(\w{4})/) {
+		my $word = uc($1);
 		if ( !$dict->{$word}) {
-			print "Word $i: no such word $word\n";
+			print "Word $i: no such word \"$word\"\n";
 			$ok = 0;
 			last;
 		}
