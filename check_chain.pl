@@ -1,5 +1,8 @@
 use utf8;
 use open qw(:std :utf8);
+use charnames qw(:full :short);
+use strict;
+use warnings FATAL => 'all';
 
 my $dict_fname = $ARGV[0];
 my $chain_fname  = $ARGV[1];
@@ -23,7 +26,7 @@ close DICT;
 
 open CHAIN, "<", $chain_fname or die "Cannot open wordchain file $chain_fname";
 
-my $i = 0;
+my $i = 1;
 my $ok = 1;
 
 my $prev;
@@ -31,7 +34,8 @@ my $used = {};
 while(<CHAIN>) {
 	my $str = $_;
 	if (/(\w{4})/) {
-		my $word = uc($1);
+		my $word = $1;
+		$word = uc($word);
 		if ( !$dict->{$word}) {
 			print "Word $i: no such word \"$word\"\n";
 			$ok = 0;
