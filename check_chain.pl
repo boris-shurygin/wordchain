@@ -3,6 +3,9 @@ use open qw(:std :utf8);
 
 my $dict_fname = $ARGV[0];
 my $chain_fname  = $ARGV[1];
+my $print_chain = 0;
+
+$print_chain = 1 if $ARGV[2] eq "--print";
 
 # Read dictionary 
 open DICT, "<", $dict_fname or die "Cannot open $dict_fname";
@@ -32,6 +35,7 @@ while(<CHAIN>) {
 	my $str = $_;
 	if (/(\w{4})/) {
 		my $word = uc($1);
+		$i++;
 		if ( !$dict->{$word}) {
 			print "Word $i: no such word \"$word\"\n";
 			$ok = 0;
@@ -51,7 +55,6 @@ while(<CHAIN>) {
 		}
 		$prev = $word;
 		$used->{$word} = 1;
-		$i++;
 	} 
 }
 if ($ok) {
